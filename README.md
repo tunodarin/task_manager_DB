@@ -1,0 +1,1 @@
+PythonとSQLiteで作ったシンプルなTo-Do管理ツールです
