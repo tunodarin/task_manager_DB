@@ -1,0 +1,6 @@
+my-project/
+├── app.py              # アプリ本体（Application Layer）
+├── database.db         # データベース（Data Layer）※.gitignoreで除外
+├── static/             # CSSなど
+└── templates/
+    └── index.html      # 画面（Presentation Layer）
