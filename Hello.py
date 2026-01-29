@@ -1,0 +1,38 @@
+# -*- coding: utf-8 -*-
+from flask import Flask, render_template, request, redirect
+import sqlite3
+
+app = Flask(__name__)
+
+# データベースを初期化する関数
+def init_db():
+    with sqlite3.connect('database.db') as conn:
+        conn.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT)")
+    print("Database initialized.")
+
+@app.route('/')
+def index():
+    # DBからデータを取得して表示する
+    with sqlite3.connect('database.db') as conn:
+        # 取得したデータを辞書形式で扱いやすくする設定
+        conn.row_factory = sqlite3.Row
+        tasks = conn.execute("SELECT * FROM tasks").fetchall()
+    return render_template('index.html', tasks=tasks)
+
+if __name__ == '__main__':
+    init_db() # 起動時にDBを作成
+    app.run(debug=True)
+
+@app.route('/add', methods=['POST'])
+def add():
+    # フォームから送信された「title」を取得
+    title = request.form.get('title')
+    
+    if title:
+        with sqlite3.connect('database.db') as conn:
+            # SQLのINSERT文を実行してデータを保存 (Create)
+            conn.execute("INSERT INTO tasks (title) VALUES (?)", (title,))
+            conn.commit()
+            
+    # 保存が終わったらトップページに戻る
+    return redirect('/')
