@@ -3,7 +3,7 @@
 このプロジェクトは、Web3層構造を学習するためのタスク管理アプリケーションです。
 
 ## 1. システム構成図
-![システム構成図](architecture.png)
+![4711Special＿システム構成図.pdf](./4711Special＿システム構成図.pdf)
 
 ## 2. 使用技術 (Technology Stack)
 - **Presentation Layer:** HTML / Jinja2 (Flask Template)
