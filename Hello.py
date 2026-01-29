@@ -16,7 +16,7 @@ def index():
     with sqlite3.connect('database.db') as conn:
         # 取得したデータを辞書形式で扱いやすくする設定
         conn.row_factory = sqlite3.Row
-        tasks = conn.execute("SELECT * FROM tasks").fetchall()
+        tasks = conn.execute("SELECT id, title FROM tasks").fetchall()
     return render_template('index.html', tasks=tasks)
 
 if __name__ == '__main__':
@@ -35,4 +35,14 @@ def add():
             conn.commit()
             
     # 保存が終わったらトップページに戻る
+    return redirect('/')
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    with sqlite3.connect('database.db') as conn:
+        # 指定されたIDのタスクを削除するSQL (Delete)
+        conn.execute("DELETE FROM tasks WHERE id = ?", (id,))
+        conn.commit()
+    
+    # 削除が終わったらトップページにリダイレクト
     return redirect('/')
