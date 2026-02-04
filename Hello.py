@@ -24,17 +24,15 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 @app.route('/add', methods=['POST'])
-def add():
+def add_task():
     # フォームから送信された「title」を取得
     title = request.form.get('title')
     
     if title:
         with sqlite3.connect('database.db') as conn:
             # SQLのINSERT文を実行してデータを保存 (Create)
-            conn.execute("INSERT INTO tasks (title) VALUES (?)", (title,))
-            conn.commit()
-            
-    # 保存が終わったらトップページに戻る
+            conn.execute("INSERT INTO tasks (title) VALUES (?)", (title,))             
+        # 保存が終わったらトップページに戻る
     return redirect('/')
 
 @app.route('/delete/<int:id>')
