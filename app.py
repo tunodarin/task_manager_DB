@@ -8,7 +8,7 @@ import sqlite3
 app = Flask(__name__)
 
 def init_db():
-    with sqlite3.connect(database.db) as conn:
+    with sqlite3.connect('database.db') as conn:
         # 【重要】一度テーブルを完全に削除して、新しい構造で作り直させる
         conn.execute("DROP TABLE IF EXISTS tasks") 
         conn.execute("""
