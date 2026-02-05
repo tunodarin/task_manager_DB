@@ -26,7 +26,7 @@ def index():
 
 @app.route('/add', methods=['POST'])
 def add_task():
-    title = request.form.get('title')  # フォームから送信された「title」を取得
+    title = request.form.get('title')  #「title」を取得
     deadline = request.form.get('deadline') # 日付を取得
 
     if title:
