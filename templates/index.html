@@ -132,7 +132,11 @@
             <input type="checkbox" onclick="location.href='/complete/{{ task.id }}'">
             <div>
                 <strong>{{ task.title }}</strong><br>
-                <small style="color:#7f8c8d;">📅期限: {{ task.deadline if task.deadline else 'なし' }}</small>
+                {% if task.deadline %}
+                <small style="color: #e67e22; font-weight: bold;">📅 期限: {{ task.deadline }}</small>
+                {% else %}
+                <small style="color: #bdc3c7;">⏳ 期限なし</small>
+                {% endif %}
             </div>
             <a href="/complete/{{ task.id }}" style="color:red; margin-left:10px;">[削除]</a>
         </li>
