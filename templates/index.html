@@ -3,11 +3,119 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>タスク管理アプリ</title>
+    <title>My TODO App</title>
+    <style>
+        /* 全体の設定 */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        h3 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            color: #34495e;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        input[type="date"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            button:hover {
+                background-color: #2980b9;
+            }
+
+        /* リスト */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #fff;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* 完了したタスクのスタイル */
+        .completed {
+            color: #bdc3c7;
+            background-color: #fafafa;
+        }
+
+        .completed del {
+            color: #bdc3c7;
+        }
+
+        /* 削除ボタン */
+        .delete-btn {
+            margin-left: auto;
+            color: #e74c3c;
+            text-decoration: none;
+            font-size: 0.8em;
+            padding: 5px 10px;
+            border: 1px solid #e74c3c;
+            border-radius: 4px;
+        }
+
+        .delete-btn:hover {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        /* チェックボックス */
+        input[type="checkbox"] {
+            transform: scale(1.2);
+            margin-right: 15px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>タスク管理アプリ</h1>
+    <h1>📝My　TODO　List</h1>
 
     <form action="/add" method="POST">
         <input type="text" name="title" placeholder="タスクを入力" required>
@@ -17,15 +125,15 @@
 
     <hr>
 
-    <h3>未完了のタスク</h3>
+    <h3>📍未完了</h3>
     <ul>
         {% for task in tasks if task.is_completed == 0 %}
         <li>
             <input type="checkbox" onclick="location.href='/complete/{{ task.id }}'">
-           
-            <strong>{{ task.title }}</strong>
-            (期限: {{ task.deadline if task.deadline else 'なし' }})
-
+            <div>
+                <strong>{{ task.title }}</strong><br>
+                <small style="color:#7f8c8d;">📅期限: {{ task.deadline if task.deadline else 'なし' }}</small>
+            </div>
             <a href="/complete/{{ task.id }}" style="color:red; margin-left:10px;">[削除]</a>
         </li>
         {% endfor %}
@@ -33,7 +141,7 @@
 
     <hr>
 
-    <h3>完了したタスク</h3>
+    <h3>📍完了済み</h3>
     <ul>
         {% for task in tasks if task.is_completed == 1 %}
         <li style="color: gray;">
