@@ -8,7 +8,7 @@ app = Flask(__name__)
 def init_db():
     with sqlite3.connect('database.db') as conn:
         # 'is_completed' ÉJÉâÉÄÇí«â¡Åi0: ñ¢äÆóπ, 1: äÆóπÅj
-        conn.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT)", is_completed INTEGER DEFAULT 0)")
+        conn.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, is_completed INTEGER DEFAULT 0)")
     print("Database initialized.")
     
 @app.route('/')
