@@ -22,8 +22,10 @@ def index():
         #deadlineを取得
         #deadline IS NULL を使って、期限なしを後ろ(1)、期限ありを前(0)にする
         # 2. その後、期限があるもの同士を日付順(ASC)に並べる
-        tasks = conn.execute("""SELECT id, title, deadline, is_completed FROM tasks 
-     　　ORDER BY is_completed ASC, deadline IS NULL ASC, deadline ASC""").fetchall()
+        tasks = conn.execute("""
+            SELECT id, title, deadline, is_completed FROM tasks 
+     　　   ORDER BY is_completed ASC, deadline IS NULL ASC, deadline ASC
+        """).fetchall()
     return render_template('index.html', tasks=tasks)
 
 @app.route('/add', methods=['POST'])
