@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+print("プログラムが開始されました")
+
 from flask import Flask, render_template, request, redirect
 import sqlite3
 
@@ -51,7 +54,6 @@ def delete(id):
     # 削除が終わったらトップページにリダイレクト
     return redirect('/')
 
-    if __name__ == '__main__':
-        init_db() # 起動時にDBを作成
+if __name__ == "__main__":
+        init_db()
         app.run(debug=True)
-
