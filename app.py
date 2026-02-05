@@ -13,14 +13,14 @@ def init_db():
         # 'is_completed' カラムを追加（0: 未完了, 1: 完了）
         conn.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, is_completed INTEGER DEFAULT 0)")
     print("Database initialized.")
-    
+ 
 @app.route('/')
 def index():
-    # DBからデータを取得して表示する
+     # DBからデータを取得して表示する
     with sqlite3.connect('database.db') as conn:
-        # 取得したデータを辞書形式で扱いやすくする設定
         conn.row_factory = sqlite3.Row
-        tasks = conn.execute("SELECT id, title FROM tasks").fetchall()
+        # is_completed も取得するように変更
+        tasks = conn.execute("SELECT id, title, is_completed FROM tasks").fetchall()
     return render_template('index.html', tasks=tasks)
 
 @app.route('/add', methods=['POST'])
@@ -55,5 +55,5 @@ def delete(id):
     return redirect('/')
 
 if __name__ == "__main__":
-        init_db()
-        app.run(debug=True)
+    init_db()
+    app.run(debug=True)
