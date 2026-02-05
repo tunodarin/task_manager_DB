@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-print("プログラムが開始されました")
+print("Program started!")
 
 from flask import Flask, render_template, request, redirect
 import sqlite3
