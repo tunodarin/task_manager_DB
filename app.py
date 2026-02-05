@@ -26,12 +26,12 @@ def index():
 
 @app.route('/add', methods=['POST'])
 def add_task():
-    title = request.form.get('title')  #utitlev‚ğæ“¾
+    title = request.form.get('title')
     deadline = request.form.get('deadline') # “ú•t‚ğæ“¾
-
+    
     if title:
         with sqlite3.connect('database.db') as conn:
-            conn.execute("INSERT INTO tasks (title,deadline) VALUES (?)", (title,deadline)) 
+            conn.execute("INSERT INTO tasks (title, deadline) VALUES (?, ?)", (title, deadline))
             conn.commit()
     return redirect('/')
 

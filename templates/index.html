@@ -41,7 +41,7 @@
 
             <del>
                 <strong>{{task.title}}</strong>
-                (期限：{{task.deadline if task/deadline else 'なし'}})
+                (期限：{{task.deadline if task.deadline else 'なし'}})
             </del>
             <span style="background: #eee; padding: 2px 5px; border-radius: 3px;">完了</span>
             <a href="/delete/{{ task.id }}" style="color: red; margin-left: 10px;">[削除]</a>
