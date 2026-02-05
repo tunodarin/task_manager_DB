@@ -24,7 +24,7 @@ def index():
         # 2. その後、期限があるもの同士を日付順(ASC)に並べる
         tasks = conn.execute("""
             SELECT id, title, deadline, is_completed FROM tasks 
-     　　   ORDER BY is_completed ASC, deadline IS NULL ASC, deadline ASC
+           ORDER BY is_completed ASC, deadline IS NULL ASC, deadline ASC
         """).fetchall()
     return render_template('index.html', tasks=tasks)
 
