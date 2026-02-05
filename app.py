@@ -8,10 +8,17 @@ import sqlite3
 app = Flask(__name__)
 
 def init_db():
-    with sqlite3.connect('database.db') as conn:
-        # 'is_completed' カラム（0: 未完了, 1: 完了）
-        # deadline　カラム
-        conn.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT,deadline TEXT, is_completed INTEGER DEFAULT 0)")
+    with sqlite3.connect(DB_PATH) as conn:
+        # 【重要】一度テーブルを完全に削除して、新しい構造で作り直させる
+        conn.execute("DROP TABLE IF EXISTS tasks") 
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS tasks (
+                id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                title TEXT, 
+                is_completed INTEGER DEFAULT 0,
+                deadline TEXT
+            )
+        """)
     print("Database initialized.")
  
 @app.route('/')
