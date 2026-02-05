@@ -11,6 +11,7 @@
 
     <form action="/add" method="POST">
         <input type="text" name="title" placeholder="タスクを入力" required>
+        <input type="date" name="deadline">
         <button type="submit">追加</button>
     </form>
 
@@ -23,6 +24,16 @@
             <input type="checkbox" onclick="location.href='/complete/{{ task.id }}'">
             {{ task.title }}
             <a href="/delete/{{ task.id }}" style="color: red; margin-left: 10px;">[削除]</a>
+
+            {% if task.is_completed == 1 %}<del>
+                {% endif %}
+                <strong>{{ task.title }}</strong>
+                (期限: {{ task.deadline if task.deadline else 'なし' }})
+                {% if task.is_completed == 1 %}
+            </del> (完了){% endif %}
+
+            <a href="/complete/{{ task.id }}">[完了/未完了]</a>
+            <a href="/delete/{{ task.id }}">[削除]</a>
         </li>
         {% endfor %}
     </ul>

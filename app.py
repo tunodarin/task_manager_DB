@@ -7,11 +7,11 @@ import sqlite3
 
 app = Flask(__name__)
 
-# データベースを初期化する関数
 def init_db():
     with sqlite3.connect('database.db') as conn:
-        # 'is_completed' カラムを追加（0: 未完了, 1: 完了）
-        conn.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, is_completed INTEGER DEFAULT 0)")
+        # 'is_completed' カラム（0: 未完了, 1: 完了）
+        # deadline　カラム
+        conn.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT,deadline TEXT, is_completed INTEGER DEFAULT 0)")
     print("Database initialized.")
  
 @app.route('/')
@@ -19,21 +19,20 @@ def index():
      # DBからデータを取得して表示する
     with sqlite3.connect('database.db') as conn:
         conn.row_factory = sqlite3.Row
-        # is_completed も取得するように変更
-        tasks = conn.execute("SELECT id, title, is_completed FROM tasks").fetchall()
+        # is_completed を取得
+        # deadlineを取得
+        tasks = conn.execute("SELECT id, title, deadline, is_completed FROM tasks").fetchall()
     return render_template('index.html', tasks=tasks)
 
 @app.route('/add', methods=['POST'])
 def add_task():
-    # フォームから送信された「title」を取得
-    title = request.form.get('title')
-    
+    title = request.form.get('title')  # フォームから送信された「title」を取得
+    deadline = request.form.get('deadline') # 日付を取得
+
     if title:
         with sqlite3.connect('database.db') as conn:
-            # SQLのINSERT文を実行してデータを保存 (Create)
-            conn.execute("INSERT INTO tasks (title) VALUES (?)", (title,)) 
+            conn.execute("INSERT INTO tasks (title,deadline) VALUES (?)", (title,deadline)) 
             conn.commit()
-        # 保存が終わったらトップページに戻る
     return redirect('/')
 
 @app.route('/complete/<int:id>')
